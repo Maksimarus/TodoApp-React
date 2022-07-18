@@ -22,7 +22,7 @@ const useTodos = initialState => {
     };
     setTodos([newTodo, ...todos]);
   };
-  return [todos, changeTodo, deleteTodo, addTodo];
+  return [todos, setTodos, changeTodo, deleteTodo, addTodo];
 };
 
 export default useTodos;

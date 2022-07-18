@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TodoItem from './components/TodoItem';
 import Layout from './layout/Layout';
 import AddNewTodo from './components/AddNewTodo';
@@ -22,7 +22,38 @@ const App = () => {
       isCompleted: false,
     },
   ];
-  const [todos, changeTodo, deleteTodo, addTodo] = useTodos(data);
+  const [todos, setTodos, changeTodo, deleteTodo, addTodo] = useTodos(data);
+  const [currentTodo, setCurrentTodo] = useState(null);
+
+  const dragFns = {
+    dragStartHandle(e, todo) {
+      setCurrentTodo(todo);
+    },
+    dragEndHandler(e) {
+      e.target.style.boxShadow = '';
+    },
+    dragOverHandler(e) {
+      e.preventDefault();
+      if (e.target.tagName === 'DIV') {
+        e.target.style.boxShadow = '7px 25px 23px 4px rgb(75 85 99)';
+      }
+    },
+    dropHandler(e, todo) {
+      e.preventDefault();
+      setTodos(
+        todos.map(el => {
+          if (el._id === todo._id) {
+            return (el = currentTodo);
+          }
+          if (el._id === currentTodo._id) {
+            return (el = todo);
+          }
+          return el;
+        }),
+      );
+      e.target.style.boxShadow = '';
+    },
+  };
 
   return (
     <Layout>
@@ -31,6 +62,7 @@ const App = () => {
         <AddNewTodo addTodo={addTodo} />
         {todos.map(todo => (
           <TodoItem
+            dragFns={dragFns}
             key={todo._id}
             todo={todo}
             changeTodo={changeTodo}
