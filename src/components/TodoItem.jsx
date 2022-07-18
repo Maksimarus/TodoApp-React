@@ -3,17 +3,25 @@ import Check from './UI/Check';
 import cn from 'classnames';
 import DeleteIcon from './UI/DeleteIcon';
 
-const TodoItem = ({todo, changeTodo, deleteTodo, dragFns}) => {
+const TodoItem = ({
+  todo,
+  changeTodo,
+  deleteTodo,
+  dragStartHandle,
+  dragEndHandler,
+  dragOverHandler,
+  dropHandler,
+}) => {
   return (
     <div
       draggable={true}
-      onDragStart={e => dragFns.dragStartHandle(e, todo)}
-      onDragLeave={e => dragFns.dragEndHandler(e)}
-      onDragEnd={e => dragFns.dragEndHandler(e)}
-      onDragOver={e => dragFns.dragOverHandler(e)}
-      onDrop={e => dragFns.dropHandler(e, todo)}
+      onDragStart={e => dragStartHandle(e, todo)}
+      onDragLeave={e => dragEndHandler(e)}
+      onDragEnd={e => dragEndHandler(e)}
+      onDragOver={e => dragOverHandler(e)}
+      onDrop={e => dropHandler(e, todo)}
       className={cn(
-        'flex p-4 bg-gray-800 rounded-2xl mb-6 justify-between align-middle',
+        'flex p-4 bg-gray-800 rounded-2xl mb-6 justify-between align-middle cursor-grab',
         {'line-through': todo.isCompleted},
       )}>
       <button onClick={() => changeTodo(todo._id)} className="flex">
