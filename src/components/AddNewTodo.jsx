@@ -17,6 +17,7 @@ const AddNewTodo = ({addTodo}) => {
       <input
         className="w-full p-3 b-6 bg-gray-800 rounded-xl"
         type="text"
+        placeholder="Добавить новую задачу"
         value={value}
         onChange={e => setValue(e.target.value)}
         onKeyUp={e => e.key === 'Enter' && addNewTodo()}
