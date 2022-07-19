@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 
 import Main from '../pages/Main';
@@ -6,7 +6,13 @@ import Login from '../pages/Login';
 import {AuthContext} from '../context';
 
 const AppRouter = () => {
-  const {isAuth} = useContext(AuthContext);
+  const {isAuth, setIsAuth} = useContext(AuthContext);
+
+  useEffect(() => {
+    if (localStorage.getItem('auth')) {
+      setIsAuth(true);
+    }
+  });
 
   return (
     <Routes>

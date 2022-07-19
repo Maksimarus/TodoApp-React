@@ -16,7 +16,7 @@ const useTodos = initialState => {
 
   const addTodo = title => {
     const newTodo = {
-      _id: new Date(),
+      _id: new Date().getTime(),
       title,
       isCompleted: false,
     };
