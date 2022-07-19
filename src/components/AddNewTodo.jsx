@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import MyInput from './UI/MyInput';
 import PlusIcon from './UI/PlusIcon';
 
 const AddNewTodo = ({addTodo}) => {
@@ -14,8 +15,7 @@ const AddNewTodo = ({addTodo}) => {
       <button onClick={addNewTodo}>
         <PlusIcon />
       </button>
-      <input
-        className="w-full p-3 b-6 bg-gray-800 rounded-xl"
+      <MyInput
         type="text"
         placeholder="Добавить новую задачу"
         value={value}

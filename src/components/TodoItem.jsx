@@ -1,7 +1,7 @@
 import React from 'react';
 import Check from './UI/Check';
 import cn from 'classnames';
-import DeleteIcon from './UI/DeleteIcon';
+import DeleteBtn from './UI/DeleteBtn';
 
 const TodoItem = ({
   todo,
@@ -28,9 +28,7 @@ const TodoItem = ({
         <Check isCompleted={todo.isCompleted} />
         <p>{todo.title}</p>
       </button>
-      <button onClick={() => deleteTodo(todo._id)}>
-        <DeleteIcon />
-      </button>
+      <DeleteBtn onClick={() => deleteTodo(todo._id)} />
     </div>
   );
 };
