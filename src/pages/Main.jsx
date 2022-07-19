@@ -5,6 +5,7 @@ import AddNewTodo from '../components/AddNewTodo';
 
 import useTodos from '../hooks/useTodos';
 import useDnD from '../hooks/useDnD';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 const Main = () => {
   const data = [
@@ -24,7 +25,6 @@ const Main = () => {
       isCompleted: false,
     },
   ];
-
   const [todos, setTodos, changeTodo, deleteTodo, addTodo] = useTodos(data);
   const [dragStartHandle, dragEndHandler, dragOverHandler, dropHandler] = useDnD(
     todos,
@@ -32,21 +32,24 @@ const Main = () => {
   );
 
   return (
-    <>
+    <section>
       <AddNewTodo addTodo={addTodo} />
-      {todos.map(todo => (
-        <TodoItem
-          dragStartHandle={dragStartHandle}
-          dragEndHandler={dragEndHandler}
-          dragOverHandler={dragOverHandler}
-          dropHandler={dropHandler}
-          key={todo._id}
-          todo={todo}
-          changeTodo={changeTodo}
-          deleteTodo={deleteTodo}
-        />
-      ))}
-    </>
+      <TransitionGroup component="ul">
+        {todos.map(todo => (
+          <CSSTransition key={todo._id} timeout={500} classNames="todo">
+            <TodoItem
+              dragStartHandle={dragStartHandle}
+              dragEndHandler={dragEndHandler}
+              dragOverHandler={dragOverHandler}
+              dropHandler={dropHandler}
+              todo={todo}
+              changeTodo={changeTodo}
+              deleteTodo={deleteTodo}
+            />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
+    </section>
   );
 };
 

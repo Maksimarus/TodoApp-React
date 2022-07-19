@@ -4,10 +4,14 @@ const useTodos = initialState => {
   const [todos, setTodos] = useState(initialState);
 
   const changeTodo = id => {
-    const copy = [...todos];
-    const current = copy.find(el => el._id === id);
-    current.isCompleted = !current.isCompleted;
-    setTodos(copy);
+    setTodos(
+      todos.map(todo => {
+        if (todo._id === id) {
+          todo.isCompleted = !todo.isCompleted;
+        }
+        return todo;
+      }),
+    );
   };
 
   const deleteTodo = id => {

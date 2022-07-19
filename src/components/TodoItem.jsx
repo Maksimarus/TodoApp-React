@@ -21,7 +21,7 @@ const TodoItem = ({
       onDragOver={e => dragOverHandler(e)}
       onDrop={e => dropHandler(e, todo)}
       className={cn(
-        'flex p-4 bg-gray-800 rounded-2xl mb-6 justify-between align-middle cursor-grab',
+        'todo flex p-4 bg-gray-800 rounded-2xl mb-6 justify-between items-center cursor-grab',
         {'line-through': todo.isCompleted},
       )}>
       <button onClick={() => changeTodo(todo._id)} className="flex">

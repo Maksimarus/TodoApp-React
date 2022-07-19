@@ -8,13 +8,13 @@ const useDnD = (todos, setTodos) => {
   };
 
   const dragEndHandler = e => {
-    e.target.style.boxShadow = '';
+    e.target.classList.remove('bg-gray-600');
   };
 
   const dragOverHandler = e => {
     e.preventDefault();
     if (e.target.tagName === 'DIV') {
-      e.target.style.boxShadow = '7px 25px 23px 4px rgb(75 85 99)';
+      e.target.classList.add('bg-gray-600');
     }
   };
 
@@ -30,7 +30,7 @@ const useDnD = (todos, setTodos) => {
       return el;
     });
     setTodos(newTodosArr);
-    e.target.style.boxShadow = '';
+    e.target.classList.remove('bg-gray-600');
   };
   return [dragStartHandle, dragEndHandler, dragOverHandler, dropHandler];
 };

@@ -11,16 +11,16 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center mb-8">
+    <header className="flex justify-between items-center mb-8">
       <h1 className="font-bold text-3xl">TODO App</h1>
       {isAuth ? (
-        <MyButton onClick={comeOut} addClassName="bg-red-400 min-w-[150px]">
+        <MyButton onClick={comeOut} addClassName="min-w-[150px] bg-red-500 ">
           Выйти
         </MyButton>
       ) : (
         ''
       )}
-    </div>
+    </header>
   );
 };
 
