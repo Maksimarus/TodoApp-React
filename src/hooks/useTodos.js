@@ -6,8 +6,8 @@ const useTodos = initialState => {
   const changeTodo = id => {
     setTodos(
       todos.map(todo => {
-        if (todo._id === id) {
-          todo.isCompleted = !todo.isCompleted;
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
         }
         return todo;
       }),
@@ -15,14 +15,14 @@ const useTodos = initialState => {
   };
 
   const deleteTodo = id => {
-    setTodos([...todos.filter(el => el._id !== id)]);
+    setTodos([...todos.filter(el => el.id !== id)]);
   };
 
   const addTodo = title => {
     const newTodo = {
-      _id: new Date(),
+      id: new Date().getTime(),
       title,
-      isCompleted: false,
+      completed: false,
     };
     setTodos([newTodo, ...todos]);
   };

@@ -17,7 +17,7 @@ const TodoItem = ({
   const [visibleDeletePopup, setVisibleDeletePopup] = useState(false);
 
   const deletePopupHandle = () => {
-    deleteTodo(todo._id);
+    deleteTodo(todo.id);
     setVisibleDeletePopup(false);
   };
 
@@ -31,10 +31,11 @@ const TodoItem = ({
         onDragOver={e => dragOverHandler(e)}
         onDrop={e => dropHandler(e, todo)}
         className={cn('todo flex p-4 bg-gray-800 rounded-2xl mb-6 cursor-grab', {
-          'line-through': todo.isCompleted,
+          'line-through': todo.completed,
         })}>
-        <div onClick={() => changeTodo(todo._id)} className="flex grow">
-          <Check isCompleted={todo.isCompleted} />
+        <div onClick={() => changeTodo(todo.id)} className="flex grow">
+          <Check isCompleted={todo.completed} />
+          <p className="mr-3 text-bold">{todo.id}.</p>
           <p>{todo.title}</p>
         </div>
         <DeleteBtn onClick={() => setVisibleDeletePopup(true)} />
