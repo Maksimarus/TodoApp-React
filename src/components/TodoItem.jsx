@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Check from './UI/Check';
 import cn from 'classnames';
 import DeleteBtn from './UI/DeleteBtn';
+import DeletePopup from './DeletePopup';
+import {Transition} from 'react-transition-group';
 
 const TodoItem = ({
   todo,
@@ -12,24 +14,41 @@ const TodoItem = ({
   dragOverHandler,
   dropHandler,
 }) => {
+  const [visibleDeletePopup, setVisibleDeletePopup] = useState(false);
+
+  const deletePopupHandle = () => {
+    deleteTodo(todo._id);
+    setVisibleDeletePopup(false);
+  };
+
   return (
-    <div
-      draggable={true}
-      onDragStart={e => dragStartHandle(e, todo)}
-      onDragLeave={e => dragEndHandler(e)}
-      onDragEnd={e => dragEndHandler(e)}
-      onDragOver={e => dragOverHandler(e)}
-      onDrop={e => dropHandler(e, todo)}
-      className={cn(
-        'todo flex p-4 bg-gray-800 rounded-2xl mb-6 justify-between items-center cursor-grab',
-        {'line-through': todo.isCompleted},
-      )}>
-      <button onClick={() => changeTodo(todo._id)} className="flex">
-        <Check isCompleted={todo.isCompleted} />
-        <p>{todo.title}</p>
-      </button>
-      <DeleteBtn onClick={() => deleteTodo(todo._id)} />
-    </div>
+    <>
+      <div
+        draggable={true}
+        onDragStart={e => dragStartHandle(e, todo)}
+        onDragLeave={e => dragEndHandler(e)}
+        onDragEnd={e => dragEndHandler(e)}
+        onDragOver={e => dragOverHandler(e)}
+        onDrop={e => dropHandler(e, todo)}
+        className={cn('todo flex p-4 bg-gray-800 rounded-2xl mb-6 cursor-grab', {
+          'line-through': todo.isCompleted,
+        })}>
+        <div onClick={() => changeTodo(todo._id)} className="flex grow">
+          <Check isCompleted={todo.isCompleted} />
+          <p>{todo.title}</p>
+        </div>
+        <DeleteBtn onClick={() => setVisibleDeletePopup(true)} />
+      </div>
+      <Transition in={visibleDeletePopup} timeout={500} mountOnEnter unmountOnExit>
+        {state => (
+          <DeletePopup
+            addClassName={state}
+            deleteTodo={deletePopupHandle}
+            closePopup={() => setVisibleDeletePopup(false)}
+          />
+        )}
+      </Transition>
+    </>
   );
 };
 

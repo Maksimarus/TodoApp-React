@@ -4,6 +4,16 @@
 
 @keyframes fade-in {
   from {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
     transform: translateX(0);
     opacity: 1;
   }
@@ -13,21 +23,46 @@
   }
 }
 
-@keyframes fade-out {
+@keyframes popup-in {
   from {
-    transform: translateX(-200px);
     opacity: 0;
   }
   to {
-    transform: translateX(0px);
     opacity: 1;
   }
 }
-
-.todo-exit-active {
-  animation: fade-in 0.5s forwards;
+@keyframes popup-cont-in {
+  from {
+    transform: translateY(-400px);
+  }
+  to {
+    transform: translateY(0px);
+  }
 }
 
 .todo-enter-active {
+  animation: fade-in 0.5s forwards;
+}
+.todo-exit-active {
   animation: fade-out 0.5s forwards;
+}
+
+.confirm.entering {
+  animation: fade-in 0.5s forwards;
+}
+.confirm.exiting {
+  animation: fade-out 0.5s forwards;
+}
+
+.popup.entering {
+  animation: popup-in 0.5s forwards;
+}
+.popup.exiting {
+  animation: popup-in 0.5s forwards reverse;
+}
+.popup.entering .popup-container {
+  animation: popup-cont-in 0.5s forwards;
+}
+.popup.exiting .popup-container {
+  animation: popup-cont-in 0.5s forwards reverse;
 }

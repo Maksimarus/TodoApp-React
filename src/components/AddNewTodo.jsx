@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Transition} from 'react-transition-group';
 import Confirm from './Confirm';
 import MyInput from './UI/MyInput';
 import PlusBtn from './UI/PlusBtn';
@@ -36,10 +37,18 @@ const AddNewTodo = ({addTodo}) => {
           onKeyUp={e => e.key === 'Enter' && addNewTodo()}
         />
       </div>
-      {visibleConfirm && (
-        <Confirm addClassName="bg-green-700">Задача успешно добавлена</Confirm>
-      )}
-      {visibleError && <Confirm addClassName="bg-red-500">Введите текст задачи</Confirm>}
+      <Transition in={visibleConfirm} timeout={500} mountOnEnter unmountOnExit>
+        {state => (
+          <Confirm addClassName={`bg-green-700 ${state}`}>
+            Задача успешно добавлена
+          </Confirm>
+        )}
+      </Transition>
+      <Transition in={visibleError} timeout={500} mountOnEnter unmountOnExit>
+        {state => (
+          <Confirm addClassName={`bg-red-500 ${state}`}>Введите текст задачи</Confirm>
+        )}
+      </Transition>
     </div>
   );
 };
