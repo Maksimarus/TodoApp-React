@@ -27,7 +27,7 @@ const AddNewTodo = ({addTodo}) => {
   };
 
   return (
-    <div className="mb-10">
+    <div className="mb-10 w-full">
       <div className="flex bg-gray-800 rounded-xl mb-3">
         <PlusBtn onClick={addNewTodo} />
         <MyInput

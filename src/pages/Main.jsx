@@ -16,13 +16,6 @@ const Main = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
 
-  const fetchTodos = async () => {
-    const response = await TodoService.getTodos(limit, page);
-    const totalCount = response.headers['x-total-count'];
-    setTodos([...response.data]);
-    setPagesCount(getPagesCount(totalCount, limit));
-  };
-
   const pagesArray = usePagination(pagesCount);
   const [todos, setTodos, changeTodo, deleteTodo, addTodo] = useTodos([]);
   const [dragStartHandle, dragEndHandler, dragOverHandler, dropHandler] = useDnD(
@@ -30,14 +23,25 @@ const Main = () => {
     setTodos,
   );
 
+  const fetchTodos = async () => {
+    const response = await TodoService.getTodos(limit, page);
+    const totalCount = response.headers['x-total-count'];
+    setTodos([...response.data]);
+    setPagesCount(getPagesCount(totalCount, limit));
+  };
+
   useEffect(() => {
     fetchTodos();
   }, [page]);
 
+  const changePage = change => {
+    setPage(change);
+  };
+
   return (
-    <section>
+    <section className="flex flex-col items-center">
       <AddNewTodo addTodo={addTodo} />
-      <TransitionGroup component="ul">
+      <TransitionGroup component="ul" className="w-full">
         {todos.map(todo => (
           <CSSTransition key={todo.id} timeout={500} classNames="todo">
             <TodoItem
@@ -52,11 +56,7 @@ const Main = () => {
           </CSSTransition>
         ))}
       </TransitionGroup>
-      <Pagination
-        current={page}
-        setPage={pageNum => setPage(pageNum)}
-        pagesArray={pagesArray}
-      />
+      <Pagination current={page} setPage={changePage} pagesArray={pagesArray} />
     </section>
   );
 };

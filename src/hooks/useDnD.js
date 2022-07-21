@@ -20,11 +20,12 @@ const useDnD = (todos, setTodos) => {
 
   const dropHandler = (e, todo) => {
     e.preventDefault();
+    console.log(todos);
     const newTodosArr = todos.map(el => {
-      if (el._id === todo._id) {
+      if (el.id === todo.id) {
         return (el = current);
       }
-      if (el._id === current._id) {
+      if (el.id === current.id) {
         return (el = todo);
       }
       return el;
